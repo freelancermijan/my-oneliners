@@ -11,3 +11,9 @@ waymore -i "mmu.ac.uk" -mode U | qsreplace -a "FUZZ" | grep "FUZZ" | sed 's/FUZZ
 ```
 waymore -i "mmu.ac.uk" -mode U | qsreplace "FUZZ" | sort -u | tee parameters.txt
 ```
+
+### Paramspider
+
+```
+paramspider -d "testphp.vulnweb.com" -s | grep "http" | tee paramspider.txt
+```
