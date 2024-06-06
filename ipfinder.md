@@ -4,7 +4,7 @@
 subfinder -d "vulnweb.com" -recursive -all -silent | subprober -ip | grep -oE '[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+' | sort -u | tee ips.txt
 ```
 
-### subprober
+### shodanx
 
 ```
 shodanx custom -cq hostname:"vulnweb.com" -o ips.txt
