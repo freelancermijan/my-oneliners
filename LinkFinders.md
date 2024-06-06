@@ -1,5 +1,11 @@
 # Single Domain URLs Finding
 
+### Waymore
+
+```
+waymore -i "testphp.vulnweb.com" -n -mode U | tee testphp.vulnweb.com.txt
+```
+
 ### waybackurls
 
 ```
