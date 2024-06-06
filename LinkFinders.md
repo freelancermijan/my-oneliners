@@ -31,3 +31,9 @@ waymore -i "vulnweb.com" -mode U | tee vulnweb.com.txt
 ```
 waybackurls vulnweb.com | tee vulnweb.com.txt
 ````
+
+### Gau
+
+```
+gau --subs vulnweb.com --providers wayback,commoncrawl,otx,urlscan --threads 70 | tee urls.txt
+```
