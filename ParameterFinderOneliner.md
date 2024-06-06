@@ -17,3 +17,9 @@ waymore -i "mmu.ac.uk" -mode U | qsreplace "FUZZ" | sort -u | tee parameters.txt
 ```
 paramspider -d "testphp.vulnweb.com" -s | grep "http" | tee paramspider.txt
 ```
+
+### Arjun
+
+```
+arjun -u "http://testphp.vulnweb.com" -t 10 --passive wayback,commoncrawl,otx -oT arjun.txt
+```
