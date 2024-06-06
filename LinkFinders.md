@@ -15,5 +15,5 @@ waybackurls -no-subs testphp.vulnweb.com
 ### Gau
 
 ```
-gau testphp.vulnweb.com --providers wayback,commoncrawl,otx,urlscan --threads 70
+gau testphp.vulnweb.com --providers wayback,commoncrawl,otx,urlscan --threads 70 | tee urls.txt
 ```
