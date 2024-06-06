@@ -25,3 +25,9 @@ gau testphp.vulnweb.com --providers wayback,commoncrawl,otx,urlscan --threads 70
 ```
 waymore -i "vulnweb.com" -mode U | tee vulnweb.com.txt
 ```
+
+### Waybackurls
+
+```
+waybackurls vulnweb.com | tee vulnweb.com.txt
+````
