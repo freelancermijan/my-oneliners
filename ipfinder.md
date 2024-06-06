@@ -1,3 +1,10 @@
+### subfinder, subprober
+
+```
+subfinder -d "vulnweb.com" -recursive -all -silent | subprober -ip | sort -u | grep -oE '[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+' | tee ips.txt
+```
+
+
 ### subfinder, httpx
 
 ```
