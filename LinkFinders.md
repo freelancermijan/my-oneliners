@@ -18,6 +18,12 @@ waybackurls -no-subs testphp.vulnweb.com
 gau testphp.vulnweb.com --providers wayback,commoncrawl,otx,urlscan --threads 70 | tee urls.txt
 ```
 
+### Katana
+
+```
+katana -u testphp.vulnweb.com -fs fqdn -rl 170 -timeout 5 -retry 2 -aff -d 5 -ef ttf,woff,svg,png,css -ps -pss waybackarchive,commoncrawl,alienvault -silent -o urls.txt
+```
+
 # Multi Domain URLs find
 
 ### Waymore
@@ -36,4 +42,10 @@ waybackurls vulnweb.com | tee vulnweb.com.txt
 
 ```
 gau --subs vulnweb.com --providers wayback,commoncrawl,otx,urlscan --threads 70 | tee urls.txt
+```
+
+### Katana
+
+```
+katana -u vulnweb.com -rl 170 -timeout 5 -retry 2 -aff -d 5 -ef ttf,woff,svg,png,css -ps -pss waybackarchive,commoncrawl,alienvault -silent -o urls.txt
 ```
