@@ -21,3 +21,9 @@ assetfinder -subs-only vulnweb.com | tee assetfinder.vulnweb.com.txt
 ```
 subdominator -d "vulnweb.com" -o vulnweb.com.subdominator.txt
 ```
+
+#### Github-subdomains
+
+```
+github-subdomains -d vulnweb.com -t your_github_token -o github-subdomains.vulnweb.com.txt
+```
