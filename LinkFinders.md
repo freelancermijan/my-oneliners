@@ -3,7 +3,7 @@
 ### Waymore
 
 ```
-waymore -i "testphp.vulnweb.com" -n -mode U | tee testphp.vulnweb.com.txt
+waymore -i "testphp.vulnweb.com" -n -mode U -oU testphp.vulnweb.com.txt
 ```
 
 ### waybackurls
