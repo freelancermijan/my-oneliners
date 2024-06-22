@@ -27,3 +27,11 @@ subdominator -d "vulnweb.com" -o vulnweb.com.subdominator.txt
 ```
 github-subdomains -d vulnweb.com -t your_github_token -o github-subdomains.vulnweb.com.txt
 ```
+
+## Active Subdomain Find
+
+#### Dnsx
+
+```
+dnsx -d "vulnweb.com" -w /usr/share/wordlists/SecLists/Discovery/DNS/subdomains-top1million-5000.txt -o vulnweb.com.dnsx.txt
+```
