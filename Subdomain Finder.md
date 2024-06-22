@@ -30,6 +30,12 @@ subdominator -d "vulnweb.com" -o vulnweb.com.subdominator.txt
 github-subdomains -d vulnweb.com -t your_github_token -o github-subdomains.vulnweb.com.txt
 ```
 
+#### Amass
+
+```
+amass enum -passive -d "vulnweb.com" -o vulnweb.com.amass.txt
+```
+
 ## Active Subdomain Find
 
 #### Dnsx
