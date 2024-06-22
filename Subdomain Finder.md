@@ -36,6 +36,12 @@ github-subdomains -d vulnweb.com -t your_github_token -o github-subdomains.vulnw
 amass enum -passive -d "vulnweb.com" -o vulnweb.com.amass.txt
 ```
 
+#### Knockpy
+
+```
+knockpy -d "vulnweb.com" --recon --save vulnweb.com
+```
+
 ## Active Subdomain Find
 
 #### Dnsx
