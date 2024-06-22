@@ -44,6 +44,12 @@ knockpy -d "vulnweb.com" --recon --save vulnweb.com
 
 ## Active Subdomain Find
 
+#### Ffuf
+
+```
+ffuf -u "http://vulnweb.com" -H "Host: FUZZ.vulnweb.com" -w /usr/share/wordlists/SecLists/Discovery/DNS/subdomains-top1million-5000.txt -maxtime 60
+```
+
 #### Dnsx
 
 ```
