@@ -15,7 +15,7 @@ sublist3r -d "vulnweb.com" -t 20 -v -o vulnweb.com.sublist3r.txt
 ### Assetfinder
 
 ```
-assetfinder -subs-only vulnweb.com | tee assetfinder.vulnweb.com.txt
+assetfinder -subs-only vulnweb.com | tee vulnweb.com.assetfinder.txt
 ```
 
 ### Subdominator
