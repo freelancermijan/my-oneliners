@@ -1,5 +1,3 @@
-
-
 ## Parameter with value
 
 ```
@@ -16,6 +14,12 @@ waymore -i "mmu.ac.uk" -mode U | qsreplace "FUZZ" | sort -u | tee parameters.txt
 
 ```
 paramspider -d "testphp.vulnweb.com" -s | grep "http" | tee paramspider.txt
+```
+
+### subfinder, httpx, unfurl, paramspider
+
+```
+subfinder -d "vulnweb.com" | httpx | unfurl domains | while read domains; do paramspider -d "$domains" -s -p "" | grep "http" | tee -a param.txt; done
 ```
 
 ### Arjun
