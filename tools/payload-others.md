@@ -12,6 +12,10 @@ sudo ./update-golang.sh
 sudo mkdir -p /usr/share/wordlists/
 ```
 
+```
+cd /usr/share/wordlists/
+```
+
 ## coffin payloads
 
 ```
