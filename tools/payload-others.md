@@ -6,6 +6,11 @@ cd update-golang
 sudo ./update-golang.sh
 ```
 
+## Payload location creation
+
+```
+sudo mkdir -p /usr/share/wordlists/
+```
 
 ## coffin payloads
 
