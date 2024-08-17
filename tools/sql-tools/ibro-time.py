@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import requests
 import chardet
 import urllib.parse
@@ -53,8 +54,8 @@ def print_banner():
         \\ \\  /
          \\/\\/
 """
-    print(banner)
-    animated_text("Project IbrahimSQLi Time-Based Tool", 'blue')
+    # print(banner)
+    # animated_text("Project IbrahimSQLi Time-Based Tool", 'blue')
     options = """
 +===================================================================================+
        --urls     Provide a urls list for testing
