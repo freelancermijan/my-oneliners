@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import re
 import subprocess
 import time
@@ -32,8 +33,8 @@ def print_banner():
         \\ \\  /
          \\/\\/
     """
-    print(banner)
-    animated_text("Project IbrahimSQLi Time-Based Tool", 'blue')
+    # print(banner)
+    # animated_text("Project IbrahimSQLi Time-Based Tool", 'blue')
 
 def animated_text(text, color='white', speed=0):
     for char in text:
