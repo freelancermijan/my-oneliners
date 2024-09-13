@@ -24,6 +24,7 @@ subfinder -d "vulnweb.com" -recursive -all -silent | katana -d 5 -ps -pss waybac
 ```
 bsqli --urls vulnweb.com.sql.parameters.txt --payloads payloads/xor.txt --verbose --save vulnweb.com.detected.sql.parameters.txt
 ```
+<a href="https://github.com/coffinsp/payloads">More payloads</a>
 
 ## Ghauri DB Dumping
 
