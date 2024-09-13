@@ -3,7 +3,7 @@
 ```
 site:.in & filetype:php | filetype:asp | filetype:aspx | filetype:jsp | filetype:jspx & intext:"responsible disclosure"
 ```
-<span>all country tlds https://gist.githubusercontent.com/derlin/421d2bb55018a1538271227ff6b1299d/raw/3a131d47ca322a1d001f1f79333d924672194f36/country-codes-tlds.json </span>
+<a href="https://gist.githubusercontent.com/derlin/421d2bb55018a1538271227ff6b1299d/raw/3a131d47ca322a1d001f1f79333d924672194f36/country-codes-tlds.json">More country tlds</a>
 
 ## All Parameter Finding
 
