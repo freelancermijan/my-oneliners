@@ -15,3 +15,9 @@ subfinder -d "vulnweb.com" -recursive -all -silent | katana -d 5 -ps -pss waybac
 ```
 subfinder -d "vulnweb.com" -recursive -all -silent | katana -d 5 -ps -pss waybackarchive,commoncrawl,alienvault -f qurl | gf sqli | qsreplace "FUZZ" | grep "FUZZ" | sed 's/FUZZ//g' | sort -u | tee vulnweb.com.sql.parameters.txt
 ```
+
+## Blind SQLi Detection
+
+```
+bsqli --urls vulnweb.com.sql.parameters.txt --payloads payloads/xor.txt --verbose --save vulnweb.com.detected.sql.parameters.txt
+```
