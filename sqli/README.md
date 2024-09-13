@@ -10,7 +10,7 @@ site:.in & filetype:php | filetype:asp | filetype:aspx | filetype:jsp | filetype
 subfinder -d "vulnweb.com" -recursive -all -silent | katana -d 5 -ps -pss waybackarchive,commoncrawl,alienvault -f qurl | qsreplace "FUZZ" | grep "FUZZ" | sed 's/FUZZ//g' | sort -u | tee vulnweb.com.all.parameters.txt
 ```
 
-## SQLi Parameters
+## Only SQLi Parameters
 
 ```
 subfinder -d "vulnweb.com" -recursive -all -silent | katana -d 5 -ps -pss waybackarchive,commoncrawl,alienvault -f qurl | gf sqli | qsreplace "FUZZ" | grep "FUZZ" | sed 's/FUZZ//g' | sort -u | tee vulnweb.com.sql.parameters.txt
