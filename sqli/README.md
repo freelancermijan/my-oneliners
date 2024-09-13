@@ -17,6 +17,7 @@ subfinder -d "vulnweb.com" -recursive -all -silent | katana -d 5 -ps -pss waybac
 ```
 subfinder -d "vulnweb.com" -recursive -all -silent | katana -d 5 -ps -pss waybackarchive,commoncrawl,alienvault -f qurl | gf sqli | qsreplace "FUZZ" | grep "FUZZ" | sed 's/FUZZ//g' | sort -u | tee vulnweb.com.sql.parameters.txt
 ```
+<a href="https://github.com/freelancermijan/.gf/blob/main/sqli.json">All SQLi Parameters</a>
 
 ## Blind SQLi Detection
 
