@@ -9,13 +9,13 @@ site:.in & filetype:php | filetype:asp | filetype:aspx | filetype:jsp | filetype
 ## All Parameter Finding
 
 ```
-subfinder -d "vulnweb.com" -recursive -all -silent | katana -d 5 -ps -pss waybackarchive,commoncrawl,alienvault -f qurl | qsreplace "FUZZ" | grep "FUZZ" | sed 's/FUZZ//g' | sort -u | tee vulnweb.com.all.parameters.txt
+subfinder -d "vulnweb.com" -recursive -all -silent | while read domains; do waymore -i "$domains" -fc 301,302,303,304,307,308 -n -mode U | qsreplace "FUZZ" | grep "FUZZ" | sed 's/FUZZ//g' | sort -u | tee vulnweb.com.parameters.txt; done
 ```
 
 ## Only SQLi Parameters
 
 ```
-subfinder -d "vulnweb.com" -recursive -all -silent | katana -d 5 -ps -pss waybackarchive,commoncrawl,alienvault -f qurl | gf sqli | qsreplace "FUZZ" | grep "FUZZ" | sed 's/FUZZ//g' | sort -u | tee vulnweb.com.sql.parameters.txt
+subfinder -d "vulnweb.com" -recursive -all -silent | while read domains; do waymore -i "$domains" -fc 301,302,303,304,307,308 -n -mode U | gf sqli | qsreplace "FUZZ" | grep "FUZZ" | sed 's/FUZZ//g' | sort -u | tee vulnweb.com.parameters.txt; done
 ```
 <a href="https://github.com/freelancermijan/.gf/blob/main/sqli.json">All SQLi Parameters</a>
 
