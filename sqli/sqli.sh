@@ -27,7 +27,6 @@ if [[ "$1" == "-h" ]]; then
 fi
 
 
-# katana -u "navy.mil" -d 5 -ps -pss waybackarchive,commoncrawl,alienvault -sf fqdn -kf -aff -fx -ef woff,css,png,svg,jpg,woff2,jpeg,gif,svg -o navy.mil.txt
 
 if [[ "$1" == "-sf" ]]; then
     domain_Without_Protocol=$(echo "$2" | sed 's,http://,,;s,https://,,;s,www\.,,;')
