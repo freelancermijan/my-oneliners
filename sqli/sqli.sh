@@ -13,7 +13,7 @@ display_usage() {
     echo ""
     echo "Required Tools:"
     echo "              https://github.com/projectdiscovery/subfinder
-              https://github.com/coffinsp/customBsqli
+              https://github.com/freelancermijan/bsqli
               https://github.com/projectdiscovery/subfinder
               https://github.com/xnl-h4ck3r/waymore
               https://github.com/tomnomnom/qsreplace
