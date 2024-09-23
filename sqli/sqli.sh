@@ -13,7 +13,7 @@ display_usage() {
     echo ""
     echo "Required Tools:"
     echo "              https://github.com/projectdiscovery/subfinder
-              https://github.com/freelancermijan/bsqli
+              https://github.com/coffinsp/customBsqli
               https://github.com/projectdiscovery/subfinder
               https://github.com/xnl-h4ck3r/waymore
               https://github.com/tomnomnom/qsreplace
@@ -27,6 +27,7 @@ if [[ "$1" == "-h" ]]; then
 fi
 
 
+# katana -u "navy.mil" -d 5 -ps -pss waybackarchive,commoncrawl,alienvault -sf fqdn -kf -aff -fx -ef woff,css,png,svg,jpg,woff2,jpeg,gif,svg -o navy.mil.txt
 
 if [[ "$1" == "-sf" ]]; then
     domain_Without_Protocol=$(echo "$2" | sed 's,http://,,;s,https://,,;s,www\.,,;')
@@ -39,7 +40,7 @@ if [[ "$1" == "-sf" ]]; then
     echo "=================================================================="
     echo ""
 
-    katana -u "$domain_Without_Protocol" -d 5 -ps -pss waybackarchive,commoncrawl,alienvault -sf fqdn -aff | sed 's/\(=.*\)/=/' | sort -u>>bug_bounty_report/$domain_Without_Protocol/sqli/all.sf.parameters.txt
+    katana -u "$domain_Without_Protocol" -d 5 -ps -pss waybackarchive,commoncrawl,alienvault -sf fqdn -aff | sort -u>>bug_bounty_report/$domain_Without_Protocol/sqli/all.sf.parameters.txt
 
     cat bug_bounty_report/$domain_Without_Protocol/sqli/all.sf.parameters.txt | gf sqli | sed 's/\(=.*\)/=/' | sort -u | tee bug_bounty_report/$domain_Without_Protocol/sqli/sqli.sf.parameters.txt
     echo ""
@@ -78,7 +79,7 @@ if [[ "$1" == "-s" ]]; then
     echo "=================================================================="
     echo ""
 
-    waymore -i "$domain_Without_Protocol" -fc 301,302,303,304,307,308 -n -mode U | sed 's/\(=.*\)/=/' | sort -u>>bug_bounty_report/$domain_Without_Protocol/sqli/all.parameters.txt
+    waymore -i "$domain_Without_Protocol" -fc 301,302,303,304,307,308 -n -mode U | sort -u>>bug_bounty_report/$domain_Without_Protocol/sqli/all.parameters.txt
 
     cat bug_bounty_report/$domain_Without_Protocol/sqli/all.parameters.txt | gf sqli | sed 's/\(=.*\)/=/' | sort -u | tee bug_bounty_report/$domain_Without_Protocol/sqli/sqli.parameters.txt
     cat bug_bounty_report/$domain_Without_Protocol/sqli/sqli.parameters.txt | wc -l
@@ -117,7 +118,7 @@ if [[ "$1" == "-m" ]]; then
 
     subfinder -d "$domain_Without_Protocol" -recursive -all -o bug_bounty_report/$domain_Without_Protocol/sqli/m_subdomains.txt
 
-    cat bug_bounty_report/$domain_Without_Protocol/sqli/m_subdomains.txt | while read domain; do waymore -i "$domain" -fc 301,302,303,304,307,308 -n -mode U | sed 's/\(=.*\)/=/' | sort -u>> bug_bounty_report/$domain_Without_Protocol/sqli/m_all.parameters.txt; done
+    cat bug_bounty_report/$domain_Without_Protocol/sqli/m_subdomains.txt | while read domain; do waymore -i "$domain" -fc 301,302,303,304,307,308 -n -mode U | sort -u>> bug_bounty_report/$domain_Without_Protocol/sqli/m_all.parameters.txt; done
 
     cat bug_bounty_report/$domain_Without_Protocol/sqli/m_all.parameters.txt | gf sqli | sed 's/\(=.*\)/=/' | sort -u | tee bug_bounty_report/$domain_Without_Protocol/sqli/m_sqli.parameters.txt
 
