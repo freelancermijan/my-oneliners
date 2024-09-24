@@ -7,8 +7,6 @@ display_usage() {
     echo ""
     echo "Options:"
     echo "  -h               Display this help message"
-    echo "  -s               Single site scan"
-    echo "  -sf              Fast scan for single site scan"
     echo "  -m               Multiple site scan"
     echo ""
     echo "Required Tools:"
