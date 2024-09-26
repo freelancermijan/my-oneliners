@@ -163,7 +163,9 @@ if [[ "$1" == "-m" ]]; then
     echo "========= Multiple site SQL Detecting finished ==================="
     echo "=================================================================="
     echo ""
+    
     cat bug_bounty_report/$domain_Without_Protocol/sqli/m_detected.sql.urls.txt
+    
     exit 0
 
 fi
