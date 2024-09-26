@@ -24,7 +24,7 @@ display_usage() {
 
 # Function to check installed tools
 check_tools() {
-    tools=("sqlmap" "subfinder" "gf" "ghauri" "waymore" "katana" "qsreplace")
+    tools=("sqlmap" "bsqli" "subfinder" "gf" "ghauri" "waymore" "katana" "qsreplace")
 
     echo "Checking required tools:"
     for tool in "${tools[@]}"; do
