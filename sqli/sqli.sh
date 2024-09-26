@@ -10,6 +10,7 @@ display_usage() {
     echo "  -s               Single site scan"
     echo "  -sf              Fast scan for single site scan"
     echo "  -m               Multiple site scan"
+    echo "  -i               Check if required tools are installed"
     echo ""
     echo "Required Tools:"
     echo "              https://github.com/projectdiscovery/subfinder
@@ -21,16 +22,36 @@ display_usage() {
     exit 0
 }
 
+# Function to check installed tools
+check_tools() {
+    tools=("sqlmap" subfinder" "gf" "ghauri" "waymore" "katana" "qsreplace")
+
+    echo "Checking required tools:"
+    for tool in "${tools[@]}"; do
+        if command -v "$tool" &> /dev/null; then
+            echo "$tool is installed at $(which $tool)"
+        else
+            echo "$tool is NOT installed or not in the PATH"
+        fi
+    done
+}
+
+
+# Check if help is requested
 if [[ "$1" == "-h" ]]; then
     display_usage
     exit 0
 fi
 
+# Check if tool installation check is requested
+if [[ "$1" == "-i" ]]; then
+    check_tools
+    exit 0
+fi
 
-# katana -u "navy.mil" -d 5 -ps -pss waybackarchive,commoncrawl,alienvault -sf fqdn -kf -aff -fx -ef woff,css,png,svg,jpg,woff2,jpeg,gif,svg -o navy.mil.txt
 
 if [[ "$1" == "-sf" ]]; then
-    domain_Without_Protocol=$(echo "$2" | sed 's,http://,,;s,https://,,;s,www\.,,;')
+    domain_Without_Protocol=$(echo "$2" | sed 's,http://,,;s,https://,,;s,www\.,,')
 
     mkdir -p bug_bounty_report/$domain_Without_Protocol/sqli/
 
@@ -69,7 +90,7 @@ if [[ "$1" == "-sf" ]]; then
 fi
 
 if [[ "$1" == "-s" ]]; then
-    domain_Without_Protocol=$(echo "$2" | sed 's,http://,,;s,https://,,;s,www\.,,;')
+    domain_Without_Protocol=$(echo "$2" | sed 's,http://,,;s,https://,,;s,www\.,,')
 
     mkdir -p bug_bounty_report/$domain_Without_Protocol/sqli/
 
@@ -107,7 +128,7 @@ if [[ "$1" == "-s" ]]; then
 fi
 
 if [[ "$1" == "-m" ]]; then
-    domain_Without_Protocol=$(echo "$2" | sed 's,http://,,;s,https://,,;s,www\.,,;')
+    domain_Without_Protocol=$(echo "$2" | sed 's,http://,,;s,https://,,;s,www\.,,')
 
     mkdir -p bug_bounty_report/$domain_Without_Protocol/sqli/
     echo ""
