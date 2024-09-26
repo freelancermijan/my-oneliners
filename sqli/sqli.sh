@@ -24,7 +24,7 @@ display_usage() {
 
 # Function to check installed tools
 check_tools() {
-    tools=("sqlmap" "bsqli" "subfinder" "gf" "ghauri" "waymore" "katana" "qsreplace")
+    tools=("sqlmap" "bsqli" "subfinder" "gf" "ghauri" "waymore" "katana" "qsreplace" "httpx")
 
     echo "Checking required tools:"
     for tool in "${tools[@]}"; do
@@ -139,7 +139,9 @@ if [[ "$1" == "-m" ]]; then
 
     subfinder -d "$domain_Without_Protocol" -recursive -all -o bug_bounty_report/$domain_Without_Protocol/sqli/m_subdomains.txt
 
-    cat bug_bounty_report/$domain_Without_Protocol/sqli/m_subdomains.txt | while read domain; do waymore -i "$domain" -fc 301,302,303,304,307,308 -n -mode U | qsreplace "FUZZ" | grep "FUZZ" | sed 's/FUZZ//g' | sort -u>> bug_bounty_report/$domain_Without_Protocol/sqli/m_all.parameters.txt; done
+    httpx -l bug_bounty_report/$domain_Without_Protocol/sqli/m_subdomains.txt -td | grep -iE "apache|tomcat|nginx|iis|jetty|glassfish|litespeed" | grep -oP 'https?://(www\.)?[^\s]+' | sed -e 's~http://~~g' -e 's~https://~~g' -e 's~www\.~~g' | tee bug_bounty_report/$domain_Without_Protocol/sqli/alive.subdomains.txt
+
+    cat bug_bounty_report/$domain_Without_Protocol/sqli/alive.subdomains.txt | while read domain; do waymore -i "$domain" -fc 301,302,303,304,307,308 -n -mode U | qsreplace "FUZZ" | grep "FUZZ" | sed 's/FUZZ//g' | sort -u>> bug_bounty_report/$domain_Without_Protocol/sqli/m_all.parameters.txt; done
 
     cat bug_bounty_report/$domain_Without_Protocol/sqli/m_all.parameters.txt | gf sqli | sed 's/\(=.*\)/=/' | sort -u | tee bug_bounty_report/$domain_Without_Protocol/sqli/m_sqli.parameters.txt
 
