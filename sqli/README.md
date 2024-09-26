@@ -1,7 +1,7 @@
 ## Dork
 
 ```
-site:.com & ext:php | ext:asp | ext:aspx | ext:jsp | ext:jspx & intext:"responsible disclosure"
+site:.com & ext:php | ext:asp | ext:aspx | ext:jsp | ext:jspx & intitle:"responsible disclosure"
 ```
 <a href="https://gist.githubusercontent.com/derlin/421d2bb55018a1538271227ff6b1299d/raw/3a131d47ca322a1d001f1f79333d924672194f36/country-codes-tlds.json">More country tlds</a>
 <a href="https://github.com/HackShiv/OneDorkForAll/blob/main/dorks/Bug%20Bounty%20dork.txt" >More bug bounty dorks</a>
