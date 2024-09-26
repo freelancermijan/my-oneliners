@@ -35,7 +35,7 @@ if [[ "$1" == "-m" ]]; then
 
     subfinder -d "$domain_Without_Protocol" -recursive -all -o bug_bounty_report/$domain_Without_Protocol/testable_params/all.subdomains.txt
 
-    httpx -l bug_bounty_report/$domain_Without_Protocol/testable_params/all.subdomains.txt -td | grep -iE "apache|tomcat|nginx|iis|jetty|glassfish|litespeed" | grep -oP 'http://[^\s]*' | sed -e 's~http://~~g' -e 's~https://~~g' -e 's~www\.~~g' | tee bug_bounty_report/$domain_Without_Protocol/testable_params/alive.subdomains.txt
+    httpx -l bug_bounty_report/$domain_Without_Protocol/testable_params/all.subdomains.txt -td | grep -iE "apache|tomcat|nginx|iis|jetty|glassfish|litespeed" | grep -oP 'https?://(www\.)?[^\s]+' | sed -e 's~http://~~g' -e 's~https://~~g' -e 's~www\.~~g' | tee bug_bounty_report/$domain_Without_Protocol/testable_params/alive.subdomains.txt
  
     cat bug_bounty_report/$domain_Without_Protocol/testable_params/alive.subdomains.txt | wc -l
 
