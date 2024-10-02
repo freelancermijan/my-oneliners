@@ -8,6 +8,7 @@ display_usage() {
     echo "Options:"
     echo "  -h               Display this help message"
     echo "  -m               Multiple site scan"
+    echo "  -i               Check if required tools are installed"
     echo ""
     echo "Required Tools:"
     echo "              https://github.com/projectdiscovery/subfinder
@@ -15,6 +16,27 @@ display_usage() {
               https://github.com/tomnomnom/qsreplace"
     exit 0
 }
+
+# Function to check installed tools
+check_tools() {
+    tools=( "subfinder" "gf" "waymore" "katana" "qsreplace" "httpx")
+
+    echo "Checking required tools:"
+    for tool in "${tools[@]}"; do
+        if command -v "$tool" &> /dev/null; then
+            echo "$tool is installed at $(which $tool)"
+        else
+            echo "$tool is NOT installed or not in the PATH"
+        fi
+    done
+}
+
+# Check if tool installation check is requested
+if [[ "$1" == "-i" ]]; then
+    check_tools
+    exit 0
+fi
+
 
 if [[ "$1" == "-h" ]]; then
     display_usage
@@ -42,7 +64,7 @@ if [[ "$1" == "-m" ]]; then
     echo ""
     cat bug_bounty_report/$domain_Without_Protocol/testable_params/alive.subdomains.txt | while read domain; do waymore -i "$domain" -n -mode U | qsreplace "FUZZ" | grep "FUZZ" | sed 's/FUZZ//g' | sort -u>>bug_bounty_report/$domain_Without_Protocol/testable_params/all.parameters.txt; done
 
-    cat bug_bounty_report/$domain_Without_Protocol/testable_params/all.parameters.txt | gf sqli | sed 's/\(=.*\)/=/' | sort -u | tee bug_bounty_report/$domain_Without_Protocol/testable_params/only.sqli.parameters.txt
+    cat bug_bounty_report/$domain_Without_Protocol/testable_params/all.parameters.txt | gf sqli | sort -u | tee bug_bounty_report/$domain_Without_Protocol/testable_params/only.sqli.parameters.txt
 
     cat bug_bounty_report/$domain_Without_Protocol/testable_params/only.sqli.parameters.txt | wc -l
 
