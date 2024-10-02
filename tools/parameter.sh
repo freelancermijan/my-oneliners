@@ -13,13 +13,14 @@ display_usage() {
     echo "Required Tools:"
     echo "              https://github.com/projectdiscovery/subfinder
               https://github.com/xnl-h4ck3r/waymore
-              https://github.com/tomnomnom/qsreplace"
+              https://github.com/tomnomnom/qsreplace
+              https://github.com/tomnomnom/gf"
     exit 0
 }
 
 # Function to check installed tools
 check_tools() {
-    tools=( "subfinder" "gf" "waymore" "katana" "qsreplace" "httpx")
+    tools=( "subfinder" "gf" "waymore" "qsreplace" "httpx")
 
     echo "Checking required tools:"
     for tool in "${tools[@]}"; do
