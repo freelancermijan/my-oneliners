@@ -14,7 +14,8 @@ display_usage() {
     echo "              https://github.com/projectdiscovery/subfinder
               https://github.com/xnl-h4ck3r/waymore
               https://github.com/tomnomnom/qsreplace
-              https://github.com/tomnomnom/gf"
+              https://github.com/tomnomnom/gf
+              https://github.com/projectdiscovery/httpx"
     exit 0
 }
 
