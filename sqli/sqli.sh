@@ -65,7 +65,7 @@ if [[ "$1" == "-sf" ]]; then
 
     katana -u "$domain_Without_Protocol" -d 5 -ps -pss waybackarchive,commoncrawl,alienvault -sf fqdn -f qurl -aff -ef js,css | qsreplace "FUZZ" | grep "FUZZ" | sed 's/FUZZ//g' | uro >>bug_bounty_report/$domain_Without_Protocol/sqli/all.sf.parameters.txt
 
-    cat bug_bounty_report/$domain_Without_Protocol/sqli/all.sf.parameters.txt | gf sqli | uro | tee bug_bounty_report/$domain_Without_Protocol/sqli/sqli.sf.parameters.txt
+    cat bug_bounty_report/$domain_Without_Protocol/sqli/all.sf.parameters.txt | gf sqli | uro -b js css | tee bug_bounty_report/$domain_Without_Protocol/sqli/sqli.sf.parameters.txt
     echo ""
     cat bug_bounty_report/$domain_Without_Protocol/sqli/sqli.sf.parameters.txt | wc -l
 
@@ -104,7 +104,7 @@ if [[ "$1" == "-s" ]]; then
 
     waymore -i "$domain_Without_Protocol" -n -mode U | qsreplace "FUZZ" | grep "FUZZ" | sed 's/FUZZ//g' | sort -u>>bug_bounty_report/$domain_Without_Protocol/sqli/all.parameters.txt
 
-    cat bug_bounty_report/$domain_Without_Protocol/sqli/all.parameters.txt | gf sqli | uro | tee bug_bounty_report/$domain_Without_Protocol/sqli/sqli.parameters.txt
+    cat bug_bounty_report/$domain_Without_Protocol/sqli/all.parameters.txt | gf sqli | uro -b js css | tee bug_bounty_report/$domain_Without_Protocol/sqli/sqli.parameters.txt
     cat bug_bounty_report/$domain_Without_Protocol/sqli/sqli.parameters.txt | wc -l
 
     echo ""
@@ -145,7 +145,7 @@ if [[ "$1" == "-m" ]]; then
 
     cat bug_bounty_report/$domain_Without_Protocol/sqli/alive.subdomains.txt | while read domain; do waymore -i "$domain" -n -mode U | qsreplace "FUZZ" | grep "FUZZ" | sed 's/FUZZ//g' | sort -u>> bug_bounty_report/$domain_Without_Protocol/sqli/m_all.parameters.txt; done
 
-    cat bug_bounty_report/$domain_Without_Protocol/sqli/m_all.parameters.txt | gf sqli | uro | tee bug_bounty_report/$domain_Without_Protocol/sqli/m_sqli.parameters.txt
+    cat bug_bounty_report/$domain_Without_Protocol/sqli/m_all.parameters.txt | gf sqli | uro -b js css | tee bug_bounty_report/$domain_Without_Protocol/sqli/m_sqli.parameters.txt
 
     cat bug_bounty_report/$domain_Without_Protocol/sqli/m_sqli.parameters.txt | wc -l
 
