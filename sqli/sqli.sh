@@ -64,7 +64,7 @@ if [[ "$1" == "-sf" ]]; then
 
     katana -u "$domain_Without_Protocol" -d 5 -ps -pss waybackarchive,commoncrawl,alienvault -sf fqdn -f qurl -aff -ef js,css | qsreplace "FUZZ" | grep "FUZZ" | sed 's/FUZZ//g' | sort -u>>bug_bounty_report/$domain_Without_Protocol/sqli/all.sf.parameters.txt
 
-    cat bug_bounty_report/$domain_Without_Protocol/sqli/all.sf.parameters.txt | gf sqli | sed 's/\(=.*\)/=/' | sort -u | tee bug_bounty_report/$domain_Without_Protocol/sqli/sqli.sf.parameters.txt
+    cat bug_bounty_report/$domain_Without_Protocol/sqli/all.sf.parameters.txt | gf sqli | sort -u | tee bug_bounty_report/$domain_Without_Protocol/sqli/sqli.sf.parameters.txt
     echo ""
     cat bug_bounty_report/$domain_Without_Protocol/sqli/sqli.sf.parameters.txt | wc -l
 
