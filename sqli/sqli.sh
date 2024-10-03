@@ -19,13 +19,14 @@ display_usage() {
               https://github.com/xnl-h4ck3r/waymore
               https://github.com/tomnomnom/qsreplace
               https://github.com/projectdiscovery/katana
+              https://github.com/s0md3v/uro
               https://github.com/projectdiscovery/httpx"
     exit 0
 }
 
 # Function to check installed tools
 check_tools() {
-    tools=("sqlmap" "bsqli" "subfinder" "gf" "ghauri" "waymore" "katana" "qsreplace" "httpx")
+    tools=("sqlmap" "bsqli" "subfinder" "gf" "uro" "ghauri" "waymore" "katana" "qsreplace" "httpx")
 
     echo "Checking required tools:"
     for tool in "${tools[@]}"; do
@@ -62,9 +63,9 @@ if [[ "$1" == "-sf" ]]; then
     echo "=================================================================="
     echo ""
 
-    katana -u "$domain_Without_Protocol" -d 5 -ps -pss waybackarchive,commoncrawl,alienvault -sf fqdn -f qurl -aff -ef js,css | qsreplace "FUZZ" | grep "FUZZ" | sed 's/FUZZ//g' | sort -u>>bug_bounty_report/$domain_Without_Protocol/sqli/all.sf.parameters.txt
+    katana -u "$domain_Without_Protocol" -d 5 -ps -pss waybackarchive,commoncrawl,alienvault -sf fqdn -f qurl -aff -ef js,css | qsreplace "FUZZ" | grep "FUZZ" | sed 's/FUZZ//g' | uro >>bug_bounty_report/$domain_Without_Protocol/sqli/all.sf.parameters.txt
 
-    cat bug_bounty_report/$domain_Without_Protocol/sqli/all.sf.parameters.txt | gf sqli | sort -u | tee bug_bounty_report/$domain_Without_Protocol/sqli/sqli.sf.parameters.txt
+    cat bug_bounty_report/$domain_Without_Protocol/sqli/all.sf.parameters.txt | gf sqli | uro | tee bug_bounty_report/$domain_Without_Protocol/sqli/sqli.sf.parameters.txt
     echo ""
     cat bug_bounty_report/$domain_Without_Protocol/sqli/sqli.sf.parameters.txt | wc -l
 
@@ -103,7 +104,7 @@ if [[ "$1" == "-s" ]]; then
 
     waymore -i "$domain_Without_Protocol" -n -mode U | qsreplace "FUZZ" | grep "FUZZ" | sed 's/FUZZ//g' | sort -u>>bug_bounty_report/$domain_Without_Protocol/sqli/all.parameters.txt
 
-    cat bug_bounty_report/$domain_Without_Protocol/sqli/all.parameters.txt | gf sqli | sed 's/\(=.*\)/=/' | sort -u | tee bug_bounty_report/$domain_Without_Protocol/sqli/sqli.parameters.txt
+    cat bug_bounty_report/$domain_Without_Protocol/sqli/all.parameters.txt | gf sqli | uro | tee bug_bounty_report/$domain_Without_Protocol/sqli/sqli.parameters.txt
     cat bug_bounty_report/$domain_Without_Protocol/sqli/sqli.parameters.txt | wc -l
 
     echo ""
@@ -144,7 +145,7 @@ if [[ "$1" == "-m" ]]; then
 
     cat bug_bounty_report/$domain_Without_Protocol/sqli/alive.subdomains.txt | while read domain; do waymore -i "$domain" -n -mode U | qsreplace "FUZZ" | grep "FUZZ" | sed 's/FUZZ//g' | sort -u>> bug_bounty_report/$domain_Without_Protocol/sqli/m_all.parameters.txt; done
 
-    cat bug_bounty_report/$domain_Without_Protocol/sqli/m_all.parameters.txt | gf sqli | sed 's/\(=.*\)/=/' | sort -u | tee bug_bounty_report/$domain_Without_Protocol/sqli/m_sqli.parameters.txt
+    cat bug_bounty_report/$domain_Without_Protocol/sqli/m_all.parameters.txt | gf sqli | uro | tee bug_bounty_report/$domain_Without_Protocol/sqli/m_sqli.parameters.txt
 
     cat bug_bounty_report/$domain_Without_Protocol/sqli/m_sqli.parameters.txt | wc -l
 
