@@ -102,7 +102,7 @@ if [[ "$1" == "-s" ]]; then
     echo "=================================================================="
     echo ""
 
-    waymore -i "$domain_Without_Protocol" -n -mode U | qsreplace "FUZZ" | grep "FUZZ" | sed 's/FUZZ//g' | sort -u>>bug_bounty_report/$domain_Without_Protocol/sqli/all.parameters.txt
+    waymore -i "$domain_Without_Protocol" -n -mode U | qsreplace "FUZZ" | grep "FUZZ" | sed 's/FUZZ//g' | uro -b js css >>bug_bounty_report/$domain_Without_Protocol/sqli/all.parameters.txt
 
     cat bug_bounty_report/$domain_Without_Protocol/sqli/all.parameters.txt | gf sqli | uro -b js css | tee bug_bounty_report/$domain_Without_Protocol/sqli/sqli.parameters.txt
     cat bug_bounty_report/$domain_Without_Protocol/sqli/sqli.parameters.txt | wc -l
@@ -143,7 +143,7 @@ if [[ "$1" == "-m" ]]; then
 
     httpx -l bug_bounty_report/$domain_Without_Protocol/sqli/m_subdomains.txt -mc 200,301,302,401,403,500 | sed -e 's~http://~~g' -e 's~https://~~g' -e 's~www\.~~g' | tee bug_bounty_report/$domain_Without_Protocol/sqli/alive.subdomains.txt
 
-    cat bug_bounty_report/$domain_Without_Protocol/sqli/alive.subdomains.txt | while read domain; do waymore -i "$domain" -n -mode U | qsreplace "FUZZ" | grep "FUZZ" | sed 's/FUZZ//g' | sort -u>> bug_bounty_report/$domain_Without_Protocol/sqli/m_all.parameters.txt; done
+    cat bug_bounty_report/$domain_Without_Protocol/sqli/alive.subdomains.txt | while read domain; do waymore -i "$domain" -n -mode U | qsreplace "FUZZ" | grep "FUZZ" | sed 's/FUZZ//g' | uro -b js css >> bug_bounty_report/$domain_Without_Protocol/sqli/m_all.parameters.txt; done
 
     cat bug_bounty_report/$domain_Without_Protocol/sqli/m_all.parameters.txt | gf sqli | uro -b js css | tee bug_bounty_report/$domain_Without_Protocol/sqli/m_sqli.parameters.txt
 
