@@ -65,7 +65,7 @@ if [[ "$1" == "-m" ]]; then
     cat bug_bounty_report/$domain_Without_Protocol/testable_params/alive.subdomains.txt | wc -l
 
     echo ""
-    cat bug_bounty_report/$domain_Without_Protocol/testable_params/alive.subdomains.txt | while read domain; do waymore -i "$domain" -n -mode U | qsreplace "FUZZ" | grep "FUZZ" | sed 's/FUZZ//g' | sort -u>>bug_bounty_report/$domain_Without_Protocol/testable_params/all.parameters.txt; done
+    cat bug_bounty_report/$domain_Without_Protocol/testable_params/alive.subdomains.txt | while read domain; do waymore -i "$domain" -n -mode U | qsreplace "FUZZ" | grep "FUZZ" | sed 's/FUZZ//g' | uro -b js css >>bug_bounty_report/$domain_Without_Protocol/testable_params/all.parameters.txt; done
 
     cat bug_bounty_report/$domain_Without_Protocol/testable_params/all.parameters.txt | gf sqli | uro -b js css | tee bug_bounty_report/$domain_Without_Protocol/testable_params/only.sqli.parameters.txt
 
