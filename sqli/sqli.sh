@@ -10,6 +10,7 @@ display_usage() {
     echo "  -s               Single site scan"
     echo "  -sf              Fast scan for single site scan"
     echo "  -m               Multiple site scan"
+    echo "  -mf              Multiple site fast scan"
     echo "  -i               Check if required tools are installed"
     echo ""
     echo "Required Tools:"
@@ -169,6 +170,54 @@ if [[ "$1" == "-m" ]]; then
     echo ""
     
     cat bug_bounty_report/$domain_Without_Protocol/sqli/m_detected.sql.urls.txt
+    
+    exit 0
+
+fi
+
+
+if [[ "$1" == "-mf" ]]; then
+    domain_Without_Protocol=$(echo "$2" | sed 's,http://,,;s,https://,,;s,www\.,,')
+
+    mkdir -p bug_bounty_report/$domain_Without_Protocol/sqli/
+    echo ""
+    echo "=================================================================="
+    echo "========= Multiple site parameter finding ========================"
+    echo "=================================================================="
+    echo ""
+
+    subfinder -d "$domain_Without_Protocol" -recursive -all -o bug_bounty_report/$domain_Without_Protocol/sqli/mf_subdomains.txt
+
+    httpx -l bug_bounty_report/$domain_Without_Protocol/sqli/mf_subdomains.txt -mc 200,301,302,401,403,500 | sed -e 's~http://~~g' -e 's~https://~~g' -e 's~www\.~~g' | tee bug_bounty_report/$domain_Without_Protocol/sqli/mf.alive.subdomains.txt
+
+
+    katana -list bug_bounty_report/$domain_Without_Protocol/sqli/mf.alive.subdomains.txt -d 5 -ps -pss waybackarchive,commoncrawl,alienvault -sf fqdn -f qurl -aff -ef js,css | qsreplace "FUZZ" | grep "FUZZ" | sed 's/FUZZ//g' | uro -b js css >>bug_bounty_report/$domain_Without_Protocol/sqli/all.mf.parameters.txt
+
+
+    cat bug_bounty_report/$domain_Without_Protocol/sqli/all.mf.parameters.txt | gf sqli | uro -b js css | tee bug_bounty_report/$domain_Without_Protocol/sqli/mf_sqli.parameters.txt
+
+    cat bug_bounty_report/$domain_Without_Protocol/sqli/mf_sqli.parameters.txt | wc -l
+
+
+    echo ""
+    echo "=================================================================="
+    echo "=========== Multiple site parameter finding finished ============="
+    echo "=================================================================="
+    echo ""
+
+    echo ""
+    echo "=================================================================="
+    echo "========= Multiple site SQL Detecting ============================"
+    echo "=================================================================="
+    echo ""
+    bsqli --urls bug_bounty_report/$domain_Without_Protocol/sqli/mf_sqli.parameters.txt --payloads payloads/sleeps.txt --verbose --save bug_bounty_report/$domain_Without_Protocol/sqli/mf_detected.sql.urls.txt
+    echo ""
+    echo "=================================================================="
+    echo "========= Multiple site SQL Detecting finished ==================="
+    echo "=================================================================="
+    echo ""
+    
+    cat bug_bounty_report/$domain_Without_Protocol/sqli/mf_detected.sql.urls.txt
     
     exit 0
 
