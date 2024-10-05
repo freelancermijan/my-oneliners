@@ -81,7 +81,7 @@ if [[ "$1" == "-sf" ]]; then
     echo "========= Fast scan for single site SQL Detecting ================"
     echo "=================================================================="
     echo ""
-    bsqli --urls bug_bounty_report/$domain_Without_Protocol/sqli/sqli.sf.parameters.txt --payloads payloads/xor.txt --verbose --save bug_bounty_report/$domain_Without_Protocol/sqli/detected.sf.sql.urls.txt
+    bsqli --urls bug_bounty_report/$domain_Without_Protocol/sqli/sqli.sf.parameters.txt --payloads payloads/sleeps.txt --verbose --save bug_bounty_report/$domain_Without_Protocol/sqli/detected.sf.sql.urls.txt
     echo ""
     echo "=================================================================="
     echo "====== Fast scan for single site SQL Detecting finished =========="
@@ -119,7 +119,7 @@ if [[ "$1" == "-s" ]]; then
     echo "========= Single site SQL Detecting =============================="
     echo "=================================================================="
     echo ""
-    bsqli --urls bug_bounty_report/$domain_Without_Protocol/sqli/sqli.parameters.txt --payloads payloads/xor.txt --verbose --save bug_bounty_report/$domain_Without_Protocol/sqli/detected.sql.urls.txt
+    bsqli --urls bug_bounty_report/$domain_Without_Protocol/sqli/sqli.parameters.txt --payloads payloads/sleeps.txt --verbose --save bug_bounty_report/$domain_Without_Protocol/sqli/detected.sql.urls.txt
     echo ""
     echo "=================================================================="
     echo "========= Single site SQL Detecting finished ====================="
@@ -162,7 +162,7 @@ if [[ "$1" == "-m" ]]; then
     echo "========= Multiple site SQL Detecting ============================"
     echo "=================================================================="
     echo ""
-    bsqli --urls bug_bounty_report/$domain_Without_Protocol/sqli/m_sqli.parameters.txt --payloads payloads/xor.txt --verbose --save bug_bounty_report/$domain_Without_Protocol/sqli/m_detected.sql.urls.txt
+    bsqli --urls bug_bounty_report/$domain_Without_Protocol/sqli/m_sqli.parameters.txt --payloads payloads/sleeps.txt --verbose --save bug_bounty_report/$domain_Without_Protocol/sqli/m_detected.sql.urls.txt
     echo ""
     echo "=================================================================="
     echo "========= Multiple site SQL Detecting finished ==================="
