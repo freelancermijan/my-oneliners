@@ -99,33 +99,41 @@ if [[ "$1" == "-s" ]]; then
 
     echo ""
     echo "=================================================================="
-    echo "========== Single site parameter finding ========================="
+    echo "=============== Single site SQLs finding ========================="
     echo "=================================================================="
     echo ""
 
-    waymore -i "$domain_Without_Protocol" -n -mode U |  uro -f hasparams | qsreplace "FUZZ" | grep "FUZZ" | sed 's/FUZZ//g' | sort -u >>bug_bounty_report/$domain_Without_Protocol/sqli/all.parameters.txt
+    waymore -i "$domain_Without_Protocol" -fc 400,401,403,404,405,408 -n -mode U -oU bug_bounty_report/$domain_Without_Protocol/sqli/single.site.all.URLs.txt
 
-    cat bug_bounty_report/$domain_Without_Protocol/sqli/all.parameters.txt | gf sqli | tee bug_bounty_report/$domain_Without_Protocol/sqli/sqli.parameters.txt
-    cat bug_bounty_report/$domain_Without_Protocol/sqli/sqli.parameters.txt | wc -l
+    cat bug_bounty_report/$domain_Without_Protocol/sqli/single.site.all.URLs.txt | sed '/%/d' | grep -v -E 'js|css' | qsreplace -a "FUZZ" | grep "FUZZ" | sed 's/FUZZ//g' | uro -f hasparams | gf sqli | tee bug_bounty_report/$domain_Without_Protocol/sqli/single.site.errors.parameter.txt
 
-    echo ""
-    echo "=================================================================="
-    echo "============= Single site parameter finding finished ============="
-    echo "=================================================================="
-    echo ""
+    cat bug_bounty_report/$domain_Without_Protocol/sqli/single.site.errors.parameter.txt | wc -l
 
     echo ""
+
+    esqli -u bug_bounty_report/$domain_Without_Protocol/sqli/single.site.errors.parameter.txt -p payloads/error.txt -f -o bug_bounty_report/$domain_Without_Protocol/sqli/single.site.errors.detected.txt
+    echo ""
+    cat bug_bounty_report/$domain_Without_Protocol/sqli/single.site.errors.detected.txt
+    cat bug_bounty_report/$domain_Without_Protocol/sqli/single.site.errors.detected.txt | wc -l
+
+
+    cat bug_bounty_report/$domain_Without_Protocol/sqli/single.site.all.URLs.txt | sed '/%/d' | grep -v -E 'js|css' | qsreplace "FUZZ" | grep "FUZZ" | sed 's/FUZZ//g' | uro -f hasparams | gf sqli | tee bug_bounty_report/$domain_Without_Protocol/sqli/single.site.no.value.parameter.txt
+    cat bug_bounty_report/$domain_Without_Protocol/sqli/single.site.no.value.parameter.txt | wc -l
+
+    bsqli -u bug_bounty_report/$domain_Without_Protocol/sqli/single.site.no.value.parameter.txt -p payloads/sleeps.txt -v -o bug_bounty_report/$domain_Without_Protocol/sqli/single.site.blinds.detected.txt -t 5
+
+    cat bug_bounty_report/$domain_Without_Protocol/sqli/single.site.blinds.detected.txt
+    echo "Blind Sqli"
+    cat bug_bounty_report/$domain_Without_Protocol/sqli/single.site.blinds.detected.txt | wc -l
+    echo "Error Sqli"
+    cat bug_bounty_report/$domain_Without_Protocol/sqli/single.site.errors.detected.txt | wc -l
+
+
+    echo ""
     echo "=================================================================="
-    echo "========= Single site SQL Detecting =============================="
+    echo "============= Single site SQLs finding finished =================="
     echo "=================================================================="
     echo ""
-    bsqli -u bug_bounty_report/$domain_Without_Protocol/sqli/sqli.parameters.txt -p payloads/sleeps.txt -v -o bug_bounty_report/$domain_Without_Protocol/sqli/detected.sql.urls.txt
-    echo ""
-    echo "=================================================================="
-    echo "========= Single site SQL Detecting finished ====================="
-    echo "=================================================================="
-    echo ""
-    cat bug_bounty_report/$domain_Without_Protocol/sqli/detected.sql.urls.txt
     exit 0
 
 fi
@@ -136,41 +144,40 @@ if [[ "$1" == "-m" ]]; then
     mkdir -p bug_bounty_report/$domain_Without_Protocol/sqli/
     echo ""
     echo "=================================================================="
-    echo "========= Multiple site parameter finding ========================"
+    echo "============== Multiple site SQLs finding ========================"
     echo "=================================================================="
     echo ""
+    waymore -i "$domain_Without_Protocol" -fc 400,401,403,404,405,408 -mode U -oU bug_bounty_report/$domain_Without_Protocol/sqli/full.server.all.URLs.txt
 
-    subfinder -d "$domain_Without_Protocol" -recursive -all -o bug_bounty_report/$domain_Without_Protocol/sqli/m_subdomains.txt
+    cat bug_bounty_report/$domain_Without_Protocol/sqli/full.server.all.URLs.txt | sed '/%/d' | grep -v -E 'js|css' | qsreplace -a "FUZZ" | grep "FUZZ" | sed 's/FUZZ//g' | uro -f hasparams | gf sqli | tee bug_bounty_report/$domain_Without_Protocol/sqli/full.server.errors.parameter.txt
 
-    httpx -l bug_bounty_report/$domain_Without_Protocol/sqli/m_subdomains.txt -mc 200,301,302,401,403,500 | sed -e 's~http://~~g' -e 's~https://~~g' -e 's~www\.~~g' | tee bug_bounty_report/$domain_Without_Protocol/sqli/alive.subdomains.txt
+    cat bug_bounty_report/$domain_Without_Protocol/sqli/full.server.errors.parameter.txt | wc -l
 
-    cat bug_bounty_report/$domain_Without_Protocol/sqli/alive.subdomains.txt | while read domain; do waymore -i "$domain" -n -mode U |  uro -f hasparams | qsreplace "FUZZ" | grep "FUZZ" | sed 's/FUZZ//g' | sort -u >> bug_bounty_report/$domain_Without_Protocol/sqli/m_all.parameters.txt; done
+    echo ""
 
-    cat bug_bounty_report/$domain_Without_Protocol/sqli/m_all.parameters.txt | gf sqli | tee bug_bounty_report/$domain_Without_Protocol/sqli/m_sqli.parameters.txt
+    esqli -u bug_bounty_report/$domain_Without_Protocol/sqli/full.server.errors.parameter.txt -p payloads/error.txt -f -o bug_bounty_report/$domain_Without_Protocol/sqli/full.server.errors.detected.txt
+    echo ""
+    cat bug_bounty_report/$domain_Without_Protocol/sqli/full.server.errors.detected.txt
+    cat bug_bounty_report/$domain_Without_Protocol/sqli/full.server.errors.detected.txt | wc -l
 
-    cat bug_bounty_report/$domain_Without_Protocol/sqli/m_sqli.parameters.txt | wc -l
+
+    cat bug_bounty_report/$domain_Without_Protocol/sqli/full.server.all.URLs.txt | sed '/%/d' | grep -v -E 'js|css' | qsreplace "FUZZ" | grep "FUZZ" | sed 's/FUZZ//g' | uro -f hasparams | gf sqli | tee bug_bounty_report/$domain_Without_Protocol/sqli/full.server.no.value.parameter.txt
+    cat bug_bounty_report/$domain_Without_Protocol/sqli/full.server.no.value.parameter.txt | wc -l
+
+    bsqli -u bug_bounty_report/$domain_Without_Protocol/sqli/full.server.no.value.parameter.txt -p payloads/sleeps.txt -v -o bug_bounty_report/$domain_Without_Protocol/sqli/full.server.blinds.detected.txt -t 5
+
+    cat bug_bounty_report/$domain_Without_Protocol/sqli/full.server.blinds.detected.txt
+    echo "Blind Sqli"
+    cat bug_bounty_report/$domain_Without_Protocol/sqli/full.server.blinds.detected.txt | wc -l
+    echo "Error Sqli"
+    cat bug_bounty_report/$domain_Without_Protocol/sqli/full.server.errors.detected.txt | wc -l
 
 
     echo ""
     echo "=================================================================="
-    echo "=========== Multiple site parameter finding finished ============="
+    echo "============== Multiple site SQLs finding finished ==============="
     echo "=================================================================="
     echo ""
-
-    echo ""
-    echo "=================================================================="
-    echo "========= Multiple site SQL Detecting ============================"
-    echo "=================================================================="
-    echo ""
-    bsqli -u bug_bounty_report/$domain_Without_Protocol/sqli/m_sqli.parameters.txt -p payloads/sleeps.txt -v -o bug_bounty_report/$domain_Without_Protocol/sqli/m_detected.sql.urls.txt
-    echo ""
-    echo "=================================================================="
-    echo "========= Multiple site SQL Detecting finished ==================="
-    echo "=================================================================="
-    echo ""
-    
-    cat bug_bounty_report/$domain_Without_Protocol/sqli/m_detected.sql.urls.txt
-    
     exit 0
 
 fi
