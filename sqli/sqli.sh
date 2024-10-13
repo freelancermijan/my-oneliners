@@ -11,6 +11,7 @@ display_usage() {
     echo "  -sf              Fast scan for single site scan"
     echo "  -m               Multiple site scan"
     echo "  -mf              Multiple site fast scan"
+    echo "  -ml              Multiple list site scan (/directory/domains.txt)"
     echo "  -i               Check if required tools are installed"
     echo ""
     echo "Required Tools:"
@@ -110,13 +111,14 @@ if [[ "$1" == "-s" ]]; then
     cat bug_bounty_report/$domain_Without_Protocol/sqli/single.site.errors.parameter.txt | wc -l
 
     echo ""
+    echo "================ Error SQLi ============================"
 
-    esqli -u bug_bounty_report/$domain_Without_Protocol/sqli/single.site.errors.parameter.txt -p payloads/error.txt -f -o bug_bounty_report/$domain_Without_Protocol/sqli/single.site.errors.detected.txt
+    esqli -l bug_bounty_report/$domain_Without_Protocol/sqli/single.site.errors.parameter.txt -p payloads/error.txt -t 10 --parallel -o bug_bounty_report/$domain_Without_Protocol/sqli/single.site.errors.detected.txt
     echo ""
     cat bug_bounty_report/$domain_Without_Protocol/sqli/single.site.errors.detected.txt
     cat bug_bounty_report/$domain_Without_Protocol/sqli/single.site.errors.detected.txt | wc -l
 
-
+    echo "================ Blind SQLi ============================"
     cat bug_bounty_report/$domain_Without_Protocol/sqli/single.site.all.URLs.txt | sed '/%/d' | grep -v -E 'js|css' | qsreplace "FUZZ" | grep "FUZZ" | sed 's/FUZZ//g' | uro -f hasparams | gf sqli | tee bug_bounty_report/$domain_Without_Protocol/sqli/single.site.no.value.parameter.txt
     cat bug_bounty_report/$domain_Without_Protocol/sqli/single.site.no.value.parameter.txt | wc -l
 
@@ -148,19 +150,19 @@ if [[ "$1" == "-m" ]]; then
     echo "=================================================================="
     echo ""
     waymore -i "$domain_Without_Protocol" -fc 400,401,403,404,405,408 -mode U -oU bug_bounty_report/$domain_Without_Protocol/sqli/full.server.all.URLs.txt
-
+    echo "================ Error SQLi ============================"
     cat bug_bounty_report/$domain_Without_Protocol/sqli/full.server.all.URLs.txt | sed '/%/d' | grep -v -E 'js|css' | qsreplace -a "FUZZ" | grep "FUZZ" | sed 's/FUZZ//g' | uro -f hasparams | gf sqli | tee bug_bounty_report/$domain_Without_Protocol/sqli/full.server.errors.parameter.txt
 
     cat bug_bounty_report/$domain_Without_Protocol/sqli/full.server.errors.parameter.txt | wc -l
 
     echo ""
 
-    esqli -u bug_bounty_report/$domain_Without_Protocol/sqli/full.server.errors.parameter.txt -p payloads/error.txt -f -o bug_bounty_report/$domain_Without_Protocol/sqli/full.server.errors.detected.txt
+    esqli -l bug_bounty_report/$domain_Without_Protocol/sqli/full.server.errors.parameter.txt -p payloads/error.txt -t 10 --parallel -o bug_bounty_report/$domain_Without_Protocol/sqli/full.server.errors.detected.txt
     echo ""
     cat bug_bounty_report/$domain_Without_Protocol/sqli/full.server.errors.detected.txt
     cat bug_bounty_report/$domain_Without_Protocol/sqli/full.server.errors.detected.txt | wc -l
 
-
+    echo "================ Blind SQLi ============================"
     cat bug_bounty_report/$domain_Without_Protocol/sqli/full.server.all.URLs.txt | sed '/%/d' | grep -v -E 'js|css' | qsreplace "FUZZ" | grep "FUZZ" | sed 's/FUZZ//g' | uro -f hasparams | gf sqli | tee bug_bounty_report/$domain_Without_Protocol/sqli/full.server.no.value.parameter.txt
     cat bug_bounty_report/$domain_Without_Protocol/sqli/full.server.no.value.parameter.txt | wc -l
 
@@ -225,6 +227,60 @@ if [[ "$1" == "-mf" ]]; then
     echo ""
     
     cat bug_bounty_report/$domain_Without_Protocol/sqli/mf_detected.sql.urls.txt
+    
+    exit 0
+
+fi
+
+
+if [[ "$1" == "-ml" ]]; then
+    domain_Without_Protocol=$(echo "$2" | sed 's,http://,,;s,https://,,;s,www\.,,')
+    domain_save=$(cat "$2" | head -n 1)
+
+    mkdir -p bug_bounty_report/$domain_save/sqli/
+
+
+    echo "============ All URLs ============"
+    echo ""
+    cat $domain_Without_Protocol | while read domain; do waymore -i "$domain" -n -mode U -oU bug_bounty_report/$domain_save/sqli/multiple.site.all.urls.txt; done
+    
+
+    echo "============ Making params for error SQLi ============"
+    echo ""
+
+    cat bug_bounty_report/$domain_Without_Protocol/sqli/multiple.site.all.urls.txt | sed '/%/d' | grep -v -E 'js|css' | qsreplace -a "FUZZ" | grep "FUZZ" | sed 's/FUZZ//g' | uro -f hasparams >> bug_bounty_report/$domain_save/sqli/multiple.site.all.error.urls.txt
+    echo ""
+    echo "Total error SQLi URLs:"
+    cat bug_bounty_report/$domain_save/sqli/multiple.site.all.error.urls.txt | wc -l
+
+    echo ""
+    echo "============ Error SQLi start ================"
+
+    esqli -l bug_bounty_report/$domain_save/sqli/multiple.site.all.error.urls.txt -p payloads/error.txt -t 10 --parallel -o bug_bounty_report/$domain_save/sqli/multiple.site.all.detect.error.urls.txt
+    echo ""
+    cat bug_bounty_report/$domain_save/sqli/multiple.site.all.detect.error.urls.txt | wc -l
+
+
+    echo "============ Making params for Blind SQLi ============"
+    echo ""
+
+    cat bug_bounty_report/$domain_save/sqli/multiple.site.all.urls.txt | sed '/%/d' | grep -v -E 'js|css' | qsreplace "FUZZ" | grep "FUZZ" | sed 's/FUZZ//g' | uro -f hasparams >> bug_bounty_report/$domain_save/sqli/multiple.site.all.blind.urls.txt
+    echo ""
+    echo "Total blind SQLi URLs:"
+    cat bug_bounty_report/$domain_save/sqli/multiple.site.all.blind.urls.txt | wc -l
+
+
+    echo ""
+    echo "============ Blind SQLi start ================"
+    bsqli -u bug_bounty_report/$domain_save/sqli/multiple.site.all.blind.urls.txt -p payloads/sleeps.txt -t 7 -v -o bug_bounty_report/$domain_save/sqli/multiple.site.all.detect.blind.urls.txt
+    echo ""
+    echo "Total Blind SQLi Detected:"
+    cat bug_bounty_report/$domain_save/sqli/multiple.site.all.detect.blind.urls.txt | wc -l
+
+    echo ""
+    echo "Total Error SQLi Detected:"
+    cat bug_bounty_report/$domain_save/sqli/multiple.site.all.detect.error.urls.txt | wc -l
+
     
     exit 0
 
