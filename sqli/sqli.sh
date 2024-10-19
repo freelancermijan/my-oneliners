@@ -64,9 +64,9 @@ if [[ "$1" == "-s" ]]; then
     echo ""
 
 
-    katana -u "$domain_Without_Protocol" -d 5 -ps -pss waybackarchive,commoncrawl,alienvault -sf fqdn -f qurl -aff -ef js,css -o bug_bounty_report/$domain_Without_Protocol/sqli/singleSite_allurls_katana.txt 
+    katana -u "$domain_Without_Protocol" -d 5 -ps -pss waybackarchive,commoncrawl,alienvault -aff -ef js,css -fs fqdn -o bug_bounty_report/$domain_Without_Protocol/sqli/singleSite_allurls_katana.txt 
     
-    waymore -i "$domain_Without_Protocol" -fc 400,401,403,404,405,408 -n -mode U -oU bug_bounty_report/$domain_Without_Protocol/sqli/singleSite_allurls_waymore.txt
+    waymore -i "$domain_Without_Protocol" -n -mode U -oU bug_bounty_report/$domain_Without_Protocol/sqli/singleSite_allurls_waymore.txt
     echo""
 
     cat bug_bounty_report/$domain_Without_Protocol/sqli/singleSite_allurls_katana.txt bug_bounty_report/$domain_Without_Protocol/sqli/singleSite_allurls_waymore.txt | anew | tee bug_bounty_report/$domain_Without_Protocol/sqli/singleSite_Total_UniqueUrls.txt
@@ -165,9 +165,9 @@ if [[ "$1" == "-m" ]]; then
     echo ""
 
 
-    katana -u "$domain_Without_Protocol" -d 5 -ps -pss waybackarchive,commoncrawl,alienvault -f qurl -aff -ef js,css -o bug_bounty_report/$domain_Without_Protocol/sqli/multiSite_allurls_katana.txt 
+    katana -u "$domain_Without_Protocol" -d 5 -ps -pss waybackarchive,commoncrawl,alienvault -aff -ef js,css -o bug_bounty_report/$domain_Without_Protocol/sqli/multiSite_allurls_katana.txt 
     
-    waymore -i "$domain_Without_Protocol" -fc 400,401,403,404,405,408 -mode U -oU bug_bounty_report/$domain_Without_Protocol/sqli/multiSite_allurls_waymore.txt
+    waymore -i "$domain_Without_Protocol" -mode U -oU bug_bounty_report/$domain_Without_Protocol/sqli/multiSite_allurls_waymore.txt
     echo""
 
     cat bug_bounty_report/$domain_Without_Protocol/sqli/multiSite_allurls_katana.txt bug_bounty_report/$domain_Without_Protocol/sqli/multiSite_allurls_waymore.txt | anew | tee bug_bounty_report/$domain_Without_Protocol/sqli/multiSite_Total_UniqueUrls.txt
@@ -276,7 +276,7 @@ if [[ "$1" == "-ml" ]]; then
     httpx -l bug_bounty_report/$domain_Without_Protocol/sqli/multi_level_total_subdomains.txt -t 70 -mc 200 -o bug_bounty_report/$domain_Without_Protocol/sqli/multi_level_alive_subdomains.txt
     
     # -mc 200,301,302,401,403,500
-    cat bug_bounty_report/$domain_Without_Protocol/sqli/multi_level_alive_subdomains.txt | sed -e 's~http://~~g' -e 's~https://~~g' -e 's~www\.~~g' | anew >> bug_bounty_report/$domain_Without_Protocol/sqli/multi_level_alive_subdomains_forUrl.txt
+    cat bug_bounty_report/$domain_Without_Protocol/sqli/multi_level_alive_subdomains.txt | sed -e 's~http://~~g' -e 's~https://~~g' -e 's~www\.~~g' | anew bug_bounty_report/$domain_Without_Protocol/sqli/multi_level_alive_subdomains_forUrl.txt
 
     echo ""
     echo "Total alive subdomains are:"
@@ -298,7 +298,7 @@ if [[ "$1" == "-ml" ]]; then
     echo "=================================================================="
     echo ""
 
-    katana -list bug_bounty_report/$domain_Without_Protocol/sqli/multi_level_alive_subdomains_forUrl.txt -d 5 -ps -pss waybackarchive,commoncrawl,alienvault -sf fqdn -aff -ef js,css -o bug_bounty_report/$domain_Without_Protocol/sqli/multi_level_AllUrls_katana.txt
+    katana -list bug_bounty_report/$domain_Without_Protocol/sqli/multi_level_alive_subdomains_forUrl.txt -d 5 -ps -pss waybackarchive,commoncrawl,alienvault -aff -ef js,css -fs fqdn -o bug_bounty_report/$domain_Without_Protocol/sqli/multi_level_AllUrls_katana.txt
 
 
     cat bug_bounty_report/$domain_Without_Protocol/sqli/multi_level_alive_subdomains_forUrl.txt | while read domain; do waymore -i "$domain" -n -mode U -oU bug_bounty_report/$domain_Without_Protocol/sqli/multi_level_AllUrls_waymore.txt; done
