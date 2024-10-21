@@ -31,7 +31,7 @@ fi
 
 # Function to check installed tools
 check_tools() {
-    tools=("sqlmap" "bsqli" "subfinder" "gf" "uro" "ghauri" "waymore" "katana" "qsreplace" "httpx")
+    tools=("bsqli" "subfinder" "gf" "anew" "uro" "waymore" "katana" "qsreplace" "httpx")
 
     echo "Checking required tools:"
     for tool in "${tools[@]}"; do
