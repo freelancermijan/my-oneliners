@@ -41,6 +41,7 @@ sqlmap -u "http://testphp.vulnweb.com/artists.php?artist=*" --batch --dbs --rand
 #### Install Automation script
 
 ```
+sudo rm -rf sqli.sh
 wget https://raw.githubusercontent.com/freelancermijan/my-oneliners/refs/heads/main/sqli/sqli.sh
 sudo chmod +x ./*.sh
 ./sqli.sh -h
