@@ -11,15 +11,6 @@ display_usage() {
     echo "  -m               Multiple site scan(katana, waymore)"
     echo "  -ml              Multiple list site scan (katana, waymore, subfinder, sublist3r)"
     echo "  -i               Check if required tools are installed"
-    echo ""
-    echo "Required Tools:"
-    echo "              https://github.com/projectdiscovery/subfinder
-              https://github.com/freelancermijan/bsqli
-              https://github.com/xnl-h4ck3r/waymore
-              https://github.com/tomnomnom/qsreplace
-              https://github.com/projectdiscovery/katana
-              https://github.com/s0md3v/uro
-              https://github.com/projectdiscovery/httpx"
     exit 0
 }
 
@@ -31,7 +22,7 @@ fi
 
 # Function to check installed tools
 check_tools() {
-    tools=("bsqli" "subfinder" "gf" "anew" "uro" "waymore" "katana" "qsreplace" "httpx")
+    tools=("bsqli" "subfinder" "sublist3r" "gf" "anew" "uro" "waymore" "katana" "qsreplace" "httpx")
 
     echo "Checking required tools:"
     for tool in "${tools[@]}"; do
