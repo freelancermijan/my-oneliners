@@ -22,7 +22,7 @@ fi
 
 # Function to check installed tools
 check_tools() {
-    tools=("bsqli" "subfinder" "sublist3r" "gf" "anew" "uro" "waymore" "katana" "qsreplace" "httpx")
+    tools=("bsqli" "subfinder" "sublist3r" "gf" "anew" "uro" "waymore" "katana 1.1.0" "qsreplace" "httpx")
 
     echo "Checking required tools:"
     for tool in "${tools[@]}"; do
@@ -55,7 +55,7 @@ if [[ "$1" == "-s" ]]; then
     echo ""
 
 
-    katana -u "$domain_Without_Protocol" -d 5 -ps -pss waybackarchive,commoncrawl,alienvault -aff -ef js,css -fs fqdn -o bug_bounty_report/$domain_Without_Protocol/sqli/singleSite_allurls_katana.txt 
+    katana -u "$domain_Without_Protocol" -duc -d 5 -ps -pss waybackarchive,commoncrawl,alienvault -aff -ef js,css -fs fqdn -o bug_bounty_report/$domain_Without_Protocol/sqli/singleSite_allurls_katana.txt 
     
     waymore -i "$domain_Without_Protocol" -n -mode U -oU bug_bounty_report/$domain_Without_Protocol/sqli/singleSite_allurls_waymore.txt
     echo""
@@ -121,7 +121,7 @@ if [[ "$1" == "-s" ]]; then
     echo "=================================================================="
     echo ""
 
-    esqli -l bug_bounty_report/$domain_Without_Protocol/sqli/singleSite_Error_based_parameters.txt -p payloads/error.txt -t 10 -o bug_bounty_report/$domain_Without_Protocol/sqli/singleSite_Error_based_SQLi_detected.txt
+    #esqli -l bug_bounty_report/$domain_Without_Protocol/sqli/singleSite_Error_based_parameters.txt -p payloads/error.txt -t 10 -o bug_bounty_report/$domain_Without_Protocol/sqli/singleSite_Error_based_SQLi_detected.txt
     echo ""
     echo "Total Error based SQLi found:"
     cat bug_bounty_report/$domain_Without_Protocol/sqli/singleSite_Error_based_SQLi_detected.txt | wc -l
@@ -222,7 +222,7 @@ if [[ "$1" == "-m" ]]; then
     echo "=================================================================="
     echo ""
 
-    esqli -l bug_bounty_report/$domain_Without_Protocol/sqli/multiSite_Error_based_parameters.txt -p payloads/error.txt -t 10 -o bug_bounty_report/$domain_Without_Protocol/sqli/multiSite_Error_based_SQLi_detected.txt
+    #esqli -l bug_bounty_report/$domain_Without_Protocol/sqli/multiSite_Error_based_parameters.txt -p payloads/error.txt -t 10 -o bug_bounty_report/$domain_Without_Protocol/sqli/multiSite_Error_based_SQLi_detected.txt
     echo ""
     echo "Total Error based SQLi found:"
     cat bug_bounty_report/$domain_Without_Protocol/sqli/multiSite_Error_based_SQLi_detected.txt | wc -l
@@ -349,7 +349,7 @@ if [[ "$1" == "-ml" ]]; then
     echo "=================================================================="
     echo ""
 
-    esqli -l bug_bounty_report/$domain_Without_Protocol/sqli/multi_level_Error_based_parameters.txt -p payloads/error.txt -t 10 -o bug_bounty_report/$domain_Without_Protocol/sqli/multi_level_Error_based_sqli_detected.txt
+    #esqli -l bug_bounty_report/$domain_Without_Protocol/sqli/multi_level_Error_based_parameters.txt -p payloads/error.txt -t 10 -o bug_bounty_report/$domain_Without_Protocol/sqli/multi_level_Error_based_sqli_detected.txt
     echo ""
     echo "Total Error based SQLi found:"
     cat bug_bounty_report/$domain_Without_Protocol/sqli/multi_level_Error_based_sqli_detected.txt | wc -l
