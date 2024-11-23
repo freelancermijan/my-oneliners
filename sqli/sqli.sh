@@ -103,7 +103,7 @@ if [[ "$1" == "-s" ]]; then
     echo "=================================================================="
     echo ""
 
-    bsqli --urls bug_bounty_report/$domain_Without_Protocol/sqli/singleSite_Blind_based_parameters.txt -p payloads/xor.txt -t 5 -v -o bug_bounty_report/$domain_Without_Protocol/sqli/singleSite_Blind_based_SQLi_detected.txt
+    bsqli --urls bug_bounty_report/$domain_Without_Protocol/sqli/singleSite_Blind_based_parameters.txt -p payloads/sqli/xor.txt -t 5 -v -o bug_bounty_report/$domain_Without_Protocol/sqli/singleSite_Blind_based_SQLi_detected.txt
     echo ""
     echo "Total Blind based SQLi found:"
     cat bug_bounty_report/$domain_Without_Protocol/sqli/singleSite_Blind_based_SQLi_detected.txt | wc -l
@@ -121,7 +121,7 @@ if [[ "$1" == "-s" ]]; then
     echo "=================================================================="
     echo ""
 
-    #esqli -l bug_bounty_report/$domain_Without_Protocol/sqli/singleSite_Error_based_parameters.txt -p payloads/error.txt -t 10 -o bug_bounty_report/$domain_Without_Protocol/sqli/singleSite_Error_based_SQLi_detected.txt
+    #esqli -l bug_bounty_report/$domain_Without_Protocol/sqli/singleSite_Error_based_parameters.txt -p payloads/sqli/errors.txt -t 10 -o bug_bounty_report/$domain_Without_Protocol/sqli/singleSite_Error_based_SQLi_detected.txt
     echo ""
     echo "Total Error based SQLi found:"
     cat bug_bounty_report/$domain_Without_Protocol/sqli/singleSite_Error_based_SQLi_detected.txt | wc -l
@@ -204,7 +204,7 @@ if [[ "$1" == "-m" ]]; then
     echo "=================================================================="
     echo ""
 
-    bsqli --urls bug_bounty_report/$domain_Without_Protocol/sqli/multiSite_Blind_based_parameters.txt -p payloads/xor.txt -t 5 -v -o bug_bounty_report/$domain_Without_Protocol/sqli/multiSite_Blind_based_SQLi_detected.txt
+    bsqli --urls bug_bounty_report/$domain_Without_Protocol/sqli/multiSite_Blind_based_parameters.txt -p payloads/sqli/xor.txt -t 5 -v -o bug_bounty_report/$domain_Without_Protocol/sqli/multiSite_Blind_based_SQLi_detected.txt
     echo ""
     echo "Total Blind based SQLi found:"
     cat bug_bounty_report/$domain_Without_Protocol/sqli/multiSite_Blind_based_SQLi_detected.txt | wc -l
@@ -222,7 +222,7 @@ if [[ "$1" == "-m" ]]; then
     echo "=================================================================="
     echo ""
 
-    #esqli -l bug_bounty_report/$domain_Without_Protocol/sqli/multiSite_Error_based_parameters.txt -p payloads/error.txt -t 10 -o bug_bounty_report/$domain_Without_Protocol/sqli/multiSite_Error_based_SQLi_detected.txt
+    #esqli -l bug_bounty_report/$domain_Without_Protocol/sqli/multiSite_Error_based_parameters.txt -p payloads/sqli/errors.txt -t 10 -o bug_bounty_report/$domain_Without_Protocol/sqli/multiSite_Error_based_SQLi_detected.txt
     echo ""
     echo "Total Error based SQLi found:"
     cat bug_bounty_report/$domain_Without_Protocol/sqli/multiSite_Error_based_SQLi_detected.txt | wc -l
@@ -331,7 +331,7 @@ if [[ "$1" == "-ml" ]]; then
     echo "=================================================================="
     echo ""
 
-    bsqli --urls bug_bounty_report/$domain_Without_Protocol/sqli/multi_level_Blind_based_parameters.txt -p payloads/xor.txt -t 5 -v -o bug_bounty_report/$domain_Without_Protocol/sqli/multi_level_Blind_based_sqli_detected.txt
+    bsqli --urls bug_bounty_report/$domain_Without_Protocol/sqli/multi_level_Blind_based_parameters.txt -p payloads/sqli/xor.txt -t 5 -v -o bug_bounty_report/$domain_Without_Protocol/sqli/multi_level_Blind_based_sqli_detected.txt
     echo ""
     echo "Total Blind based SQLi found:"
     cat bug_bounty_report/$domain_Without_Protocol/sqli/multi_level_Blind_based_sqli_detected.txt | wc -l
@@ -349,7 +349,7 @@ if [[ "$1" == "-ml" ]]; then
     echo "=================================================================="
     echo ""
 
-    #esqli -l bug_bounty_report/$domain_Without_Protocol/sqli/multi_level_Error_based_parameters.txt -p payloads/error.txt -t 10 -o bug_bounty_report/$domain_Without_Protocol/sqli/multi_level_Error_based_sqli_detected.txt
+    #esqli -l bug_bounty_report/$domain_Without_Protocol/sqli/multi_level_Error_based_parameters.txt -p payloads/sqli/errors.txt -t 10 -o bug_bounty_report/$domain_Without_Protocol/sqli/multi_level_Error_based_sqli_detected.txt
     echo ""
     echo "Total Error based SQLi found:"
     cat bug_bounty_report/$domain_Without_Protocol/sqli/multi_level_Error_based_sqli_detected.txt | wc -l
