@@ -1,3 +1,9 @@
+## Params with katana
+
+```
+katana -u "testphp.vulnweb.com" -duc -f qurl -rl 170 -timeout 5 -retry 2 -aff -d 5 -ef ttf,woff,svg,png,css -ps -pss waybackarchive,commoncrawl,alienvault -o testphp.vulnweb.com.txt
+```
+
 ## Parameter with value
 
 ```
