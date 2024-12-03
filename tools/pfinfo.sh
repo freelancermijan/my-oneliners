@@ -15,7 +15,7 @@ display_usage() {
 
 # Function to check installed tools
 check_tools() {
-    tools=("gau" "subfinder" "sublist3r" "gf" "anew" "qsreplace" "httpx")
+    tools=("katana" "subfinder" "sublist3r" "gf" "anew" "qsreplace" "httpx" "uro" "urlfinder")
 
     echo "Checking required tools:"
     for tool in "${tools[@]}"; do
